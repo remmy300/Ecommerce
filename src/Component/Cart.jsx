@@ -4,6 +4,7 @@ import { Box, Button, Image, Text, Flex } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import shopping_cart from "../assets/shopping-cart.png";
 import { motion, AnimatePresence } from "framer-motion";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ const Cart = () => {
     navigate("/checkout");
   };
   return (
-    <Box p={4}>
+    <Box p={4} backgroundColor={"white"}>
       {items.length === 0 ? (
         <Box textAlign={"center"}>
           <Image
@@ -30,9 +31,8 @@ const Cart = () => {
             mx={"auto"}
             h={{ base: 200, md: 300 }}
             w={{ base: 200, md: 300 }}
-            bg={"white"}
           />
-          <Text>Your cart is empty.Start shopping now</Text>
+          <Text color={"black"}>Your cart is empty.Start shopping now</Text>
           <Button onClick={() => navigate("/")} colorScheme="teal" mt={3}>
             Shop now
           </Button>
@@ -55,11 +55,11 @@ const Cart = () => {
                 <Image
                   src={item.image}
                   alt={item.title}
-                  boxSize={"50px"}
+                  boxSize={"200px"}
                   mr={5}
                 />
                 <Box flex={1} textAlign={{ sm: "center", md: "left" }}>
-                  <Text fontWeight={"bold"} fontSize={"lg"}>
+                  <Text fontWeight={"bold"} fontSize={"lg"} textColor={"black"}>
                     {item.title}
                   </Text>
                   <Text>Price: ${item.price}</Text>
@@ -69,9 +69,11 @@ const Cart = () => {
                   </Text>
                 </Box>
 
-                <Button onClick={() => handleRemove(item.id)} colorScheme="red">
-                  Remove
-                </Button>
+                <DeleteIcon
+                  onClick={() => handleRemove(item.id)}
+                  color={"black"}
+                  boxSize={10}
+                />
               </Box>
             ))}
           </AnimatePresence>

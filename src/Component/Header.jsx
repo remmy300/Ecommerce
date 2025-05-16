@@ -1,103 +1,215 @@
 import {
-  Badge,
   Box,
   Flex,
   IconButton,
   Input,
   Link,
   Text,
+  Badge,
+  Button,
+  VStack,
 } from "@chakra-ui/react";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
-
+import { HamburgerIcon } from "@chakra-ui/icons";
 import { FiShoppingCart } from "react-icons/fi";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 import PropTypes from "prop-types";
+import { FaChevronDown } from "react-icons/fa";
 
-const Header = ({ searchQuery, onSearchQuery }) => {
+const Header = ({ searchQuery, onSearchQuery, onCategorySelect }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [showDropdown, setShowDropdown] = useState(false);
+
   const navigate = useNavigate();
-
   const totalQuantity = useSelector((state) => state.cart.totalQuantity);
 
   const handleSearch = (e) => {
     onSearchQuery(e.target.value);
+    console.log("Searched Query:", searchQuery);
   };
 
-  const handleCartClick = () => {
-    navigate("/cart");
-  };
+  const categories = [
+    "All",
+    "Men's Clothing",
+    "Women's Clothing",
+    "Electronics",
+    "Jewelery",
+  ];
+
   return (
-    <>
-      <Box
-        backgroundColor={"teal.300"}
-        p={3}
-        mt={3}
-        boxShadow={"md"}
-        position={"sticky"}
-        top={0}
-        zIndex={10}
-      >
-        <Flex
-          justify={"space-between"}
-          alignItems={"center"}
-          gap={6}
-          wrap={"wrap"}
-        >
-          <Text fontWeight={"bold"} fontSize={"xl"} flexShrink={0}>
-            E-Commerce Store
-          </Text>
+    <Box
+      position="sticky"
+      top="0"
+      zIndex="10"
+      bg="white"
+      boxShadow="md"
+      p={4}
+      w="100%"
+    >
+      <Flex align="center" justify="space-between" wrap="wrap" gap={4}>
+        {/* Logo */}
+        <Text fontWeight="bold" fontStyle="italic" fontSize="2xl" color="gold">
+          Trendify&apos;s Store
+        </Text>
 
+        {/* Search Bar */}
+        <Input
+          placeholder="Enter products"
+          type="text"
+          value={searchQuery}
+          onChange={handleSearch}
+          textColor={"black"}
+          maxW="40%"
+          display={{ base: "none", lg: "block" }}
+          autoFocus
+          _focus={{ border: "1px solid gray", boxShadow: "md" }}
+          _placeholder={{ color: "gray.600", fontSize: "md" }}
+          border={"1px solid gray"}
+          _hover={{ border: "1px solid gray" }}
+        />
+
+        {/* Category Dropdown */}
+        <Box
+          position="relative"
+          onMouseEnter={() => setShowDropdown(true)}
+          onMouseLeave={() => setShowDropdown(false)}
+        >
+          <Button
+            rightIcon={<FaChevronDown />}
+            textColor="gray.600"
+            variant="outline"
+          >
+            Category
+          </Button>
+
+          {showDropdown && (
+            <VStack
+              position="absolute"
+              top="100%"
+              left="0"
+              bg="white"
+              boxShadow="md"
+              p={2}
+              align="stretch"
+              borderRadius="md"
+              spacing={1}
+              zIndex={20}
+            >
+              {categories.map((cat) => (
+                <Button
+                  key={cat}
+                  variant="ghost"
+                  justifyContent="flex-start"
+                  onClick={() => {
+                    onCategorySelect(cat);
+                    setShowDropdown(false);
+                  }}
+                  backgroundColor={"gray.600"}
+                  _hover={{ background: "gray.300" }}
+                >
+                  {cat}
+                </Button>
+              ))}
+            </VStack>
+          )}
+        </Box>
+
+        {/* Desktop Nav */}
+        <Flex gap={4} display={{ base: "none", lg: "flex" }}>
+          <Link as={RouterLink} to="/" color="gray.700" fontSize="lg">
+            Home
+          </Link>
+          <Link as={RouterLink} to="/shop" color="gray.700" fontSize="lg">
+            Shop
+          </Link>
+        </Flex>
+
+        {/* Cart */}
+        <Box position="relative">
+          <IconButton
+            icon={<FiShoppingCart />}
+            aria-label="Cart"
+            onClick={() => navigate("/cart")}
+            fontSize="2xl"
+            color="black"
+          />
+          {totalQuantity > 0 && (
+            <Badge
+              position="absolute"
+              top="-1"
+              right="-1"
+              bg="red.500"
+              color="white"
+              px={3}
+              rounded={"full"}
+            >
+              {totalQuantity}
+            </Badge>
+          )}
+        </Box>
+
+        {/* Hamburger Icon */}
+        <Box display={{ base: "block", lg: "none" }}>
+          <IconButton
+            icon={<HamburgerIcon boxSize={8} />}
+            aria-label="Toggle Menu"
+            onClick={() => setIsOpen(!isOpen)}
+            variant="outline"
+            background="gray.500"
+          />
+        </Box>
+      </Flex>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <Box
+          mt={4}
+          display={{ base: "block", lg: "none" }}
+          bg="white"
+          p={4}
+          boxShadow="md"
+          borderRadius="md"
+        >
           <Input
             placeholder="Enter products"
-            _placeholder={{ color: "gray.500", fontSize: "md" }}
-            bg={"whiteAlpha.500"}
             value={searchQuery}
             onChange={handleSearch}
-            flex={1}
-            maxW={"40%"}
+            mb={3}
+            borderColor="gray.400"
+            _placeholder={{ color: "gray.600", fontSize: "md" }}
           />
-
           <Link
             as={RouterLink}
             to="/"
-            textDecoration={"underline"}
-            flexShrink={0}
+            display="block"
+            mb={2}
+            color="gray.700"
+            fontSize="lg"
+            onClick={() => setIsOpen(false)}
           >
             Home
           </Link>
-
-          <Box position={"relative"} flexShrink={0}>
-            <IconButton
-              icon={<FiShoppingCart />}
-              aria-label="Cart"
-              onClick={handleCartClick}
-              fontSize={"2xl"}
-              bg={"transparent"}
-              _hover={{ bg: "whiteAlpha.200" }}
-            />
-
-            {totalQuantity > 0 && (
-              <Badge
-                position={"absolute"}
-                top={"-1"}
-                right={"-1"}
-                bg={"red.500"}
-                color={"white"}
-                px={3}
-                borderRadius={"full"}
-              >
-                {totalQuantity}
-              </Badge>
-            )}
-          </Box>
-        </Flex>
-      </Box>
-    </>
+          <Link
+            as={RouterLink}
+            to="/shop"
+            display="block"
+            color="gray.700"
+            fontSize="lg"
+            onClick={() => setIsOpen(false)}
+          >
+            Shop
+          </Link>
+        </Box>
+      )}
+    </Box>
   );
 };
-
-export default Header;
 
 Header.propTypes = {
   searchQuery: PropTypes.string.isRequired,
   onSearchQuery: PropTypes.func.isRequired,
+  onCategorySelect: PropTypes.func.isRequired,
 };
+
+export default Header;

@@ -51,9 +51,9 @@ const CartSlice = createSlice({
         ...action.payload,
       };
       state.orders.push(newOrders);
-      state.items = 0;
+      state.items = [];
       state.totalAmount = 0;
-      state.quantity = 0;
+      state.totalQuantity = 0;
     },
   },
 });

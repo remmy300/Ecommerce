@@ -28,6 +28,7 @@ import {
   AlertDescription,
   CloseButton,
   Image,
+  Flex,
 } from "@chakra-ui/react";
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -122,110 +123,40 @@ const Checkout = () => {
         spacing={[3, 5]}
         w={"100% 80% 60%"}
       >
-        <FormControl isInvalid={!formData.name}>
-          <FormLabel fontSize={"lg"} fontWeight={"bold"} color={"blue.300"}>
-            Enter Name
-          </FormLabel>
-          <InputGroup>
-            <InputLeftElement pointerEvents={"none"}>
-              <FaUser color="grey" />
-            </InputLeftElement>
-            <Input
-              type="text"
-              _placeholder={"fontsize:3, color:gray.400"}
-              placeholder="Enter your name"
-              _hover={{ background: "blue.700", color: "white" }}
-              _focus={{ border: "blue.100", boxShadow: "0 0 0 1px blue.300" }}
-              required
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-            />
-          </InputGroup>
-          <FormErrorMessage>Name is required.</FormErrorMessage>
-        </FormControl>
-
-        <FormControl isInvalid={!formData.postalCode}>
-          <FormLabel fontSize={"lg"} fontWeight={"bold"} color={"blue.300"}>
-            Enter your Postal Code
-          </FormLabel>
-          <InputGroup>
-            <InputLeftElement pointerEvents={"none"}>
-              <FaMapPin color="grey" />
-            </InputLeftElement>
-            <Input
-              type="text"
-              name="postalCode"
-              _hover={{ background: "blue.700", color: "white" }}
-              _focus={{ border: "blue.100", boxShadow: "0 0 0 1px blue.300" }}
-              placeholder="Enter your postal code"
-              value={formData.postalCode}
-              onChange={handleChange}
-            />
-          </InputGroup>
-          <FormErrorMessage>postal code is required.</FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={!formData.phoneNumber}>
-          <FormLabel fontSize={"lg"} fontWeight={"bold"} color={"blue.300"}>
-            Enter your phone number
-          </FormLabel>
-          <InputGroup>
-            <InputLeftElement pointerEvents={"none"}>
-              <FaPhone color="grey" />
-            </InputLeftElement>
-            <Input
-              type="text"
-              name="phoneNumber"
-              _hover={{ background: "blue.700", color: "white" }}
-              _focus={{ border: "blue.100", boxShadow: "0 0 0 1px blue.300" }}
-              placeholder="Enter your phone number"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-            />
-          </InputGroup>
-          <FormErrorMessage>phone number is required.</FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={!formData.email}>
-          <FormLabel fontSize={"lg"} fontWeight={"bold"} color={"blue.300"}>
-            Enter your email
-          </FormLabel>
-          <InputGroup>
-            <InputLeftElement pointerEvents={"none"}>
-              <FaMailBulk color="grey" />
-            </InputLeftElement>
-            <Input
-              type="email"
-              name="email"
-              _hover={{ background: "blue.700", color: "white" }}
-              _focus={{ border: "blue.100", boxShadow: "0 0 0 1px blue.300" }}
-              placeholder="Enter your email address"
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </InputGroup>
-          <FormErrorMessage>Email is required.</FormErrorMessage>
-        </FormControl>
-
-        <FormControl isInvalid={!formData.city}>
-          <FormLabel fontSize={"lg"} fontWeight={"bold"} color={"blue.300"}>
-            Enter your City
-          </FormLabel>
-          <InputGroup>
-            <InputLeftElement pointerEvents={"none"}>
-              <FaCity color="grey" />
-            </InputLeftElement>
-            <Input
-              type="text"
-              name="city"
-              placeholder="Enter your city"
-              _hover={{ background: "blue.700", color: "white" }}
-              _focus={{ border: "blue.100", boxShadow: "0 0 0 1px blue.300" }}
-              value={formData.city}
-              onChange={handleChange}
-            />
-          </InputGroup>
-          <FormErrorMessage>city name is required.</FormErrorMessage>
-        </FormControl>
+        {["name", "postalCode", "address", "city", "phoneNumber", "email"].map(
+          (field) => (
+            <Flex key={field} direction={"column"}>
+              <FormLabel fontSize={"lg"} fontWeight={"bold"} color={"blue.300"}>
+                {field}
+              </FormLabel>
+              <InputGroup>
+                <InputLeftElement pointerEvents={"none"}></InputLeftElement>
+                <Input
+                  type={
+                    field === "email"
+                      ? "email"
+                      : field === "phone"
+                      ? "phone"
+                      : field === "postalCode"
+                      ? "postalCode"
+                      : "text"
+                  }
+                  _placeholder={"fontsize:3, color:gray.400"}
+                  placeholder={`Your ${field}`}
+                  _hover={{ background: "blue.700", color: "white" }}
+                  _focus={{
+                    border: "blue.100",
+                    boxShadow: "0 0 0 1px blue.300",
+                  }}
+                  required
+                  name={field}
+                  value={formData.field}
+                  onChange={handleChange}
+                />
+              </InputGroup>
+            </Flex>
+          )
+        )}
 
         <FormControl isInvalid={!formData.country}>
           <FormLabel fontSize={"lg"} fontWeight={"bold"} color={"blue.300"}>
@@ -247,66 +178,46 @@ const Checkout = () => {
               <option value="London">London</option>
             </Select>
           </InputGroup>
-          <FormErrorMessage>country name is required.</FormErrorMessage>
         </FormControl>
-        <FormControl isInvalid={!formData.address}>
-          <FormLabel fontSize={"lg"} fontWeight={"bold"} color={"blue.300"}>
-            Enter your Postal Address
-          </FormLabel>
-          <InputGroup>
-            <InputLeftElement pointerEvents={"none"}>
-              <FaAddressCard color="gray" />
-            </InputLeftElement>
-            <Input
-              type="text"
-              name="address"
-              placeholder="Enter your address"
-              _hover={{ background: "blue.700", color: "white" }}
-              _focus={{ border: "blue.100", boxShadow: "0 0 0 1px blue.300" }}
-              value={formData.address}
-              onChange={handleChange}
-            />
-          </InputGroup>
-          <FormErrorMessage>address is required.</FormErrorMessage>
-        </FormControl>
-        <Box mt={4}>
-          <Text>Total Amount: ${totalAmount.toFixed(2)}</Text>
-        </Box>
-        <Box mt={4}>
-          <Text fontWeight={"bold"} fontSize={"lg"} color={"blue.300"}>
-            Payment Method
-          </Text>
-          <Box display={"flex"} alignItems={"center"} mb={4}>
-            <Image src="/images/visa.png" alt="visa" boxSize={"40px"} mr={3} />
-            <Image
-              src="/images/mastercard.png"
-              alt="mastercard"
-              boxSize={"40px"}
-              mr={3}
-            />
-            <Image
-              src="/images/paypal.png"
-              alt="paypal"
-              boxSize={"40px"}
-              mr={3}
-            />
-          </Box>
-          <Select
-            placeholder="select payment method"
-            _hover={{ background: "blue.700", color: "white" }}
-            _focus={{ border: "blue.100", boxShadow: "0 0 0 1px blue.300" }}
-            name="paymentMethod"
-            onChange={handleChange}
-          >
-            <option value={"paypal"}>Paypal</option>
-            <option value={"visa"}>Visa</option>
-            <option value={"Mastercard"}>MasterCard</option>
-          </Select>
-        </Box>
-        <Button type="submit" alignItems={"center"}>
-          Submit
-        </Button>
       </VStack>
+
+      <Box mt={4}>
+        <Text>Total Amount: ${totalAmount.toFixed(2)}</Text>
+      </Box>
+      <Box mt={4}>
+        <Text fontWeight={"bold"} fontSize={"lg"} color={"blue.300"}>
+          Payment Method
+        </Text>
+        <Box display={"flex"} alignItems={"center"} mb={4}>
+          <Image src="/images/visa.png" alt="visa" boxSize={"40px"} mr={3} />
+          <Image
+            src="/images/mastercard.png"
+            alt="mastercard"
+            boxSize={"40px"}
+            mr={3}
+          />
+          <Image
+            src="/images/paypal.png"
+            alt="paypal"
+            boxSize={"40px"}
+            mr={3}
+          />
+        </Box>
+        <Select
+          placeholder="select payment method"
+          _hover={{ background: "blue.700", color: "white" }}
+          _focus={{ border: "blue.100", boxShadow: "0 0 0 1px blue.300" }}
+          name="paymentMethod"
+          onChange={handleChange}
+        >
+          <option value={"paypal"}>Paypal</option>
+          <option value={"visa"}>Visa</option>
+          <option value={"Mastercard"}>MasterCard</option>
+        </Select>
+      </Box>
+      <Button type="submit" alignItems={"center"}>
+        Submit
+      </Button>
     </Container>
   );
 };
