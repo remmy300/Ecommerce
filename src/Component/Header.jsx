@@ -124,27 +124,38 @@ const Header = ({ searchQuery, onSearchQuery, onCategorySelect }) => {
             Shop
           </Link>
         </Flex>
-
         {/* Cart */}
-        <Box position="relative">
+        <Box position="relative" display="inline-block">
           <IconButton
             icon={<FiShoppingCart />}
             aria-label="Cart"
             onClick={() => navigate("/cart")}
             fontSize="2xl"
             color="black"
+            variant="ghost"
           />
           {totalQuantity > 0 && (
             <Badge
               position="absolute"
-              top="-1"
-              right="-1"
+              top="0"
+              right="0"
+              transform="translate(50%, -50%)"
               bg="red.500"
               color="white"
-              px={3}
-              rounded={"full"}
+              fontSize="xs"
+              fontWeight="bold"
+              px={2}
+              height="20px"
+              minWidth="20px"
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              borderRadius="full"
+              boxShadow="0 0 6px rgba(0,0,0,0.15)"
+              userSelect="none"
+              pointerEvents="none"
             >
-              {totalQuantity}
+              {totalQuantity > 99 ? "99+" : totalQuantity}
             </Badge>
           )}
         </Box>

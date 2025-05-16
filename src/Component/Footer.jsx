@@ -10,7 +10,7 @@ const Footer = () => {
       p={6}
       mt={10}
       overflowX={"hidden"}
-      w="100vw"
+      maxW="100%"
     >
       <Flex wrap="wrap" justify="space-between" gap={10}>
         {/* About Section */}

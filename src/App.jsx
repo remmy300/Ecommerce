@@ -56,7 +56,7 @@ const App = () => {
   });
 
   return (
-    <Box w={"100vw"}>
+    <Box maxW={"100%"}>
       <Routes>
         <Route
           element={

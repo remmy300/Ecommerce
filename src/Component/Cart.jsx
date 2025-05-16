@@ -58,11 +58,15 @@ const Cart = () => {
                   boxSize={"200px"}
                   mr={5}
                 />
-                <Box flex={1} textAlign={{ sm: "center", md: "left" }}>
+                <Box
+                  flex={1}
+                  textAlign={{ sm: "center", md: "left" }}
+                  textColor={"black"}
+                >
                   <Text fontWeight={"bold"} fontSize={"lg"} textColor={"black"}>
                     {item.title}
                   </Text>
-                  <Text>Price: ${item.price}</Text>
+                  <Text textColor={"black"}>Price: ${item.price}</Text>
                   <Text>Quantity: {item.quantity}</Text>
                   <Text>
                     SubTotal: ${(item.price * item.quantity).toFixed(2)}
@@ -72,13 +76,20 @@ const Cart = () => {
                 <DeleteIcon
                   onClick={() => handleRemove(item.id)}
                   color={"black"}
-                  boxSize={10}
+                  boxSize={9}
                 />
               </Box>
             ))}
           </AnimatePresence>
 
-          <Box mt={4}>
+          <Box
+            mt={4}
+            background={"gray.200"}
+            textColor={"black"}
+            maxW={"40%"}
+            rounded={"md"}
+            p={5}
+          >
             <Text>Total Items: {totalQuantity}</Text>
             <Text>Total Amount: ${totalAmount.toFixed(2)}</Text>
           </Box>
