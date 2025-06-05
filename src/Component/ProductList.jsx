@@ -68,7 +68,6 @@ const ProductList = ({ products }) => {
         lg: "repeat(4,1fr)",
       }}
       maxW="100%"
-      width="100vw"
       gap={10}
       p={5}
       backgroundColor={"whiteAlpha.200"}

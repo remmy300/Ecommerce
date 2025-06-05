@@ -55,13 +55,13 @@ const Home = () => {
 
   return (
     <>
-      <Box position="relative" w="100vw" h="100vh" overflow="hidden">
+      <Box position="relative" w="100%" h="100vh" overflow="hidden">
         <Box
           position="fixed"
           top={0}
           left={0}
           zIndex={-1}
-          w="100vw"
+          w="100%"
           h="100vh"
           overflow="hidden"
         >
@@ -71,7 +71,7 @@ const Home = () => {
             alt="hero"
             w="100%"
             h="100%"
-            objectFit="cover"
+            objectFit="contain"
           />
         </Box>
 
@@ -113,9 +113,10 @@ const Home = () => {
       {/* Featured products */}
       <Box
         overflowX={"hidden"}
-        width="100vw"
+        width="100%"
         backgroundColor={"whiteAlpha.700"}
-        margin={5}
+        mx={0}
+        my={5}
         p={5}
         textColor={"black"}
       >
@@ -140,7 +141,8 @@ const Home = () => {
           spacing={5}
           padding={3}
           zIndex={1}
-          m={10}
+          mx={5}
+          my={10}
         >
           {featuredProducts.map((product) => (
             <Box
@@ -217,7 +219,7 @@ const Home = () => {
           View All Products
         </Button>
       </Box>
-      <Container background={"whiteAlpha.700"} maxW={"100%"} m={5}>
+      <Container background={"whiteAlpha.700"} maxW={"100%"} mx={0} my={5}>
         <Box textAlign={"center"} textColor={"black"} m={6}>
           <Text fontSize={"3xl"} fontWeight={"bold"}>
             Why Choose Us
@@ -234,7 +236,7 @@ const Home = () => {
           display={"block"}
           m={"auto"}
         ></Box>
-        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={5} p={10} m={5}>
+        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={5} p={10} mx={0} my={5}>
           {[
             {
               icon: CheckIcon,
