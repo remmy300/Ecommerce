@@ -45,7 +45,6 @@ const Header = ({ searchQuery, onSearchQuery, onCategorySelect }) => {
       bg="white"
       boxShadow="md"
       p={4}
-      w="100%"
     >
       <Flex align="center" justify="space-between" wrap="wrap" gap={4}>
         {/* Logo */}
